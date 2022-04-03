@@ -3,7 +3,9 @@ h1.ownedStocks{
     text-align: center;
 }
 div.ownedContainer {
-    background-color: rgb(230, 230, 230);
+    border: 3px solid rgb(64, 197, 190);
+    border-radius: .5em;
+    margin: 1em;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -11,21 +13,20 @@ div.ownedContainer {
     overflow: scroll;
 }
 div.boughtDisplay{
-
-   
-    margin: .75em;
+    margin: .5em;
     width: 30vw;
-    height: 32vh;
+    height: 35vh;
     border: 4px solid rgb(64, 197, 190);
     border-top-left-radius: .5em;
     border-top-right-radius: .5em;
 }
 div.boughtDisplay h1 {
-    font-size: 1.5em;
+    word-wrap:unset;
+    height: 2.3em;
+    font-size: 1.25em;
     text-align: center;
     color: white;
     margin: 0;
-    padding:.4em;
     background-color: rgb(64, 197, 190);
 }
 div.boughtDisplay div.boughtTable {
@@ -50,6 +51,17 @@ div.boughtTable h3 {
 div.boughtTable p {
     font-weight: bold;
     font-size: large;
+}
+label.sellLabel {
+    display: block;
+    margin-top: -1em;
+    text-align: center;
+    font-size: small;
+}
+input.sellAmount{
+    display: block;
+    margin-inline: auto;
+    margin-bottom: .5em
 }
 button.sellButton {
     width: 20vw;
