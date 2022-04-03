@@ -18,10 +18,15 @@ Buy.init (
             type: DataTypes.TEXT,
             allowNull: false,
         },
+        exchange: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
         price: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+
         amount: {
             type: DataTypes.INTEGER,
             allowNull: false,

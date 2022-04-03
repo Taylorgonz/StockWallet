@@ -27,7 +27,9 @@ router.post('/', (req, res) => {
         name: req.body.name,
         symbol: req.body.symbol,
         price: req.body.price,
+        exchange: req.body.exchange,
         amount: req.body.amount
+
     })
     .then(boughtData => res.json(boughtData))
     .catch(err => {

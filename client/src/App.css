@@ -6,12 +6,19 @@ font-family: Arial, Helvetica, sans-serif;
 }
 
 
-h1{
+h1.header{
   text-align: center;
+  margin: 0;
+  margin-bottom: .25em;
+  padding: 1.5em;
+  color: white;
+  background-image: url('./photos/stocks-trade.jpeg');
 }
+/* search bar section */
 label.searchLabel {
   display: block;
   text-align: center;
+  margin-bottom: .5em;
   
 }
 input.searchBar{
@@ -24,22 +31,45 @@ font-weight: bolder;
 
 }
 button.searchButton {
-margin-inline:auto;
+margin: .5em auto;
+padding: .75em 2em;
 text-align: center;
+border: none;
+background-color: rgb(76, 157, 223);
+color: white;
 display: block;
+border-radius: .5em;
 }
+button.searchButton:hover {
+  box-shadow: 3px 3px rgb(31, 118, 189);
+  position: relative;
+ 
+}
+button.searchButtonDis {
+  background-color: rgb(179, 179, 179);
+  margin: .5em auto;
+padding: .75em 2em;
+text-align: center;
+border: none;
+color: white;
+display: block;
+border-radius: .5em;
+}
+
+
 
 ul.searchResponse{
   margin-inline: auto;
   margin-top: 0;
+  left: 9.5%;
   width: 81vw;
-  background-color: rgba(180, 180, 180, 0.4);
+  background-color: rgba(180, 180, 180, 0.6);
   height: fit-content;
   list-style-type: none;
   padding:0;
   font-size: medium;
   border-radius: .25em;
-  position:static;
+  position:absolute;
 
 }
 li.searchListItem {
@@ -52,3 +82,92 @@ li.searchListItem:hover {
   padding: .4em;
   background-color:rgba(251, 251, 251, 0.801);
 }
+
+/* displaying stock profile */
+
+div.stockProfileDisp {
+  margin: 1em auto;
+  padding:0;
+  width: 70vw;
+  height: 47vh;
+  border: 5px solid rgba(47, 231, 154);
+  border-top-right-radius: 2em;
+  border-top-left-radius: 2em;
+  overflow: scroll;
+}
+div.stockProfileDisp h1 {
+  text-align: center;
+  background-color: rgba(47, 231, 154);
+  padding: .3em;
+  color: white;
+  margin:0;
+}
+div.stockProfileDisp h1 span {
+  font-size: large;
+}
+div.stockProfileDisp h3 {
+  text-align: center;
+  margin: .5em 0;
+  padding: .2em 0;
+  color: rgb(31, 160, 106);
+  border-bottom: 2px solid rgba(47, 231, 154);
+}
+div.stockProfileDisp p {
+  text-align: center;
+  font-weight: bolder;
+  font-size: larger;
+  margin: 0;
+}
+div.amountDiv{
+  display: flex;
+  align-items:center;
+  flex-direction: column;
+}
+
+
+
+div.stockProfileDisp input {
+  text-align: center;
+display: inline-block;
+margin-inline: auto;
+padding-right: .5em;
+position:relative;
+ width: 5em;
+ height:2em;
+  
+}
+
+p.totalValue {
+  display: inline-block;
+font-weight:400;
+padding-left: .5em;
+}
+
+button.buyStockButton {
+  letter-spacing: 1em;
+  display: block;
+  margin: 1em auto;
+ width: 80%;
+ height: 2.5em;
+border: none;
+background-color:rgba(47, 231, 154);
+color: white;
+font-weight: bold;
+}
+button.buyStockButton:hover {
+  box-shadow: 3px 3px rgb(28, 151, 100);
+}
+
+div.stockProfileDisp button.buyStockButtonDis {
+  letter-spacing: 1em;
+  display: block;
+  margin: 1em auto;
+ 
+ width: 80%;
+ height: 2.5em;
+border: none;
+background-color:rgb(179, 179, 179);
+color: white;
+font-weight: bold;
+}
+
