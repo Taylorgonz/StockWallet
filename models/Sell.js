@@ -18,18 +18,18 @@ Sell.init (
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        bought_price: {
-            type: DataTypes.INTEGER,
+        exchange: {
+            type: DataTypes.TEXT,
             allowNull: false,
         },
-        
-        sold_price: {
-            type: DataTypes.INTEGER,
+       
+       price: {
+            type: DataTypes.DECIMAL(10,2),
             allowNull: false,
         },
 
         amount: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL(10,2),
             allowNull: false,
         },
     },

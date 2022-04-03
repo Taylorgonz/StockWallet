@@ -8,10 +8,20 @@ function App() {
   const [search, setSearch] = useState(false);
   const [buyReady, setBuyReady] = useState(false);
   const [stockReturn, setStockReturn] = useState([]);
+
+  const [boughtStocks, setBoughtStocks] = useState([]);
+
   const [stockProfile, setStockProfile] = useState('');
   const [stockValue, setStockValue] = useState(0);
   let stockBar = useRef();
   let stockAmount = useRef();
+  
+
+  const getStocks = () => {
+    axios.get('/api/buy')
+        .then(res => setBoughtStocks(res.data))
+        .catch(err => setBoughtStocks([err]));
+}
 
   const SearchProfile = (e) => {
     const options = {
@@ -42,14 +52,10 @@ function App() {
       'exchange': stockProfile.price.exchangeName,
       'amount': stockAmount.current.value
       
-    })
+    }).then(getStocks()
+    )
   }
 
-
-
-
-  console.log(stockReturn)
-  console.log(stockProfile)
   return (
     <div onClick={(e) => setStockReturn('')} className="App">
       <h1 className="header">Stock Wallet</h1>
@@ -142,7 +148,7 @@ function App() {
 
       }
 
-<Buy/>
+<Buy getStocks={getStocks} setBoughtStocks={setBoughtStocks} boughtStocks={boughtStocks}/>
 
     </div>
   );

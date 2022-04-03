@@ -7,8 +7,8 @@ router.get('/', (req,res) => {
             'id',
             'name',
             'symbol',
-            'bough_price',
-            'sold_price',
+            'price',
+            'exchange',
             'amount',
             'created_at'
         ]
@@ -25,8 +25,8 @@ router.post('/', (req, res) => {
     Sell.create({
         name: req.body.name,
         symbol: req.body.symbol,
-        bought_price: req.body.bought_price,
-        sold_price: req.body.sold_price,
+       price: req.body.price,
+        exchange: req.body.exchange,
         amount: req.body.amount
     })
     .then(sellData => res.json(sellData))
