@@ -1,16 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import Buy from "./Components/Buy/index"
+import Buy from "./Components/Buy/index";
+import Sell from './Components/Sell/index'
 import './App.css'
 
 
 function App() {
   const [search, setSearch] = useState(false);
-  const [buyReady, setBuyReady] = useState(false);
-  const [stockReturn, setStockReturn] = useState([]);
-
+  const [stockReturn, setStockReturn] = useState([])
   const [boughtStocks, setBoughtStocks] = useState([]);
-
+  const [soldStocks, setSoldStocks] = useState([]);
   const [stockProfile, setStockProfile] = useState('');
   const [stockValue, setStockValue] = useState(0);
   let stockBar = useRef();
@@ -19,15 +18,25 @@ function App() {
 
   const getStocks = () => {
     axios.get('/api/buy')
-        .then(res => setBoughtStocks(res.data))
+        .then(res => {
+          setBoughtStocks(res.data)
+        }
+
+        )
         .catch(err => setBoughtStocks([err]));
+    axios.get('/api/sell')
+    .then(res=> setSoldStocks(res.data))
+    .catch(err=> setSoldStocks([err]));
 }
 
-  const SearchProfile = (e) => {
+
+
+// main stock profile search for saving info
+  const SearchProfile = (symbol) => {
     const options = {
       method: 'GET',
       url: 'https://yh-finance.p.rapidapi.com/stock/v2/get-profile',
-      params: { symbol: stockBar.current.value, region: 'US' },
+      params: { symbol: symbol, region: 'US' },
       headers: {
         'X-RapidAPI-Host': 'yh-finance.p.rapidapi.com',
         'X-RapidAPI-Key': '6d1520fabemsh35408884286c9b4p1ea221jsn2264b127eadc'
@@ -50,11 +59,24 @@ function App() {
       'symbol': stockProfile.symbol,
       'price': stockProfile.price.regularMarketPrice.raw,
       'exchange': stockProfile.price.exchangeName,
-      'amount': stockAmount.current.value
+      'amount': stockAmount.current.value,
+      'total': stockProfile.price.regularMarketPrice.raw * stockAmount.current.value
       
-    }).then(getStocks()
-    )
+    }).then(res=>{
+      getStocks()
+      setStockProfile('')
+      stockBar.current.value=''
+      setStockValue(0)
+    })
+      
   }
+
+  useEffect(() => {
+    if (boughtStocks.length === 0)
+        getStocks()
+        
+
+}, [])
 
   return (
     <div onClick={(e) => setStockReturn('')} className="App">
@@ -96,7 +118,6 @@ function App() {
               <li className="searchListItem" key={i} onClick={(e) => {
                 
                 stockBar.current.value = stock.symbol
-                SearchProfile(e)
                 setStockReturn('')
               }}> <strong>{stock.symbol}:</strong> {stock.shortname}({stock.exchDisp})</li>
             )
@@ -105,7 +126,7 @@ function App() {
         }
         {search ?
           <button className="searchButton" onClick={(e) => {
-            SearchProfile(e)
+            SearchProfile(stockBar.current.value)
             stockBar.current.value = ''
             setSearch(false);
           }}>Search</button> :
@@ -138,7 +159,9 @@ function App() {
             </div>
           </div>
           {stockValue ? 
-          <button onClick={(e)=> buyStock()} className="buyStockButton">BUY</button>:
+          <button onClick={(e)=> {
+            buyStock()
+          }} className="buyStockButton">BUY</button>:
           <button disabled className="buyStockButtonDis">Buy</button>
           }
           
@@ -148,7 +171,15 @@ function App() {
 
       }
 
-<Buy getStocks={getStocks} setBoughtStocks={setBoughtStocks} boughtStocks={boughtStocks}/>
+{boughtStocks  && 
+  <Buy getStocks={getStocks} setBoughtStocks={setBoughtStocks} boughtStocks={boughtStocks}/>
+}
+
+{soldStocks &&
+  <Sell getStocks={getStocks} soldStocks={soldStocks}/>
+}
+
+
 
     </div>
   );

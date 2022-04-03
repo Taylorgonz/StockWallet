@@ -10,6 +10,7 @@ router.get('/', (req,res) => {
             'price',
             'exchange',
             'amount',
+            'total',
             'created_at'
         ]
     })
@@ -27,7 +28,8 @@ router.post('/', (req, res) => {
         symbol: req.body.symbol,
        price: req.body.price,
         exchange: req.body.exchange,
-        amount: req.body.amount
+        amount: req.body.amount,
+        total: req.body.total
     })
     .then(sellData => res.json(sellData))
     .catch(err => {

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from "react"
+import React from "react"
 import "./style.css"
 import axios from 'axios'
 
-const Buy = ({ getStocks, setBoughtStocks, boughtStocks }) => {
+const Buy = ({ getStocks, boughtStocks }) => {
 
-    const sellAmount = useRef();
 
 
     const sellStocks = (i) => {
@@ -15,9 +14,13 @@ const Buy = ({ getStocks, setBoughtStocks, boughtStocks }) => {
                 'symbol': boughtStocks[i].symbol,
                 'price': boughtStocks[i].price,
                 'exchange': boughtStocks[i].exchange,
-                'amount': boughtStocks[i].amount
-            }).then(
-                axios.delete(`/api/buy/${boughtStocks[i].id}`).then(getStocks())
+                'amount': boughtStocks[i].amount,
+                'total': boughtStocks[i].amount * boughtStocks[i].price
+            }).then(res =>
+                axios.delete(`/api/buy/${boughtStocks[i].id}`)
+                    .then(res =>
+                        getStocks()
+                    )
 
             ).
             catch((err) => console.log(err))
@@ -25,11 +28,7 @@ const Buy = ({ getStocks, setBoughtStocks, boughtStocks }) => {
     }
 
 
-    useEffect(() => {
-        if (boughtStocks.length === 0)
-            getStocks()
 
-    }, boughtStocks)
 
 
 
@@ -58,11 +57,11 @@ const Buy = ({ getStocks, setBoughtStocks, boughtStocks }) => {
                                         <p>{stock.amount}</p>
 
                                         <h3>Total </h3>
-                                        <p>${stock.amount * stock.price}</p>
+                                        <p>${stock.total}</p>
                                     </div>
 
                                 </div>
-
+                   
                                 <button onClick={(e) => sellStocks(i)} className="sellButton">sell</button>
 
 

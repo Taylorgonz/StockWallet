@@ -31,6 +31,11 @@ Buy.init (
             type: DataTypes.DECIMAL(10,2),
             allowNull: false,
         },
+        total: {
+            type: DataTypes.DECIMAL(10,2),
+            allowNull: false,
+        }
+    
     },
     {
         sequelize,
