@@ -13,6 +13,8 @@ h1.header{
   padding: 1.5em;
   color: white;
   background-image: url('./photos/stocks-trade.jpeg');
+  background-position: center;
+  background-size: cover;
 }
 /* search bar section */
 label.searchLabel {

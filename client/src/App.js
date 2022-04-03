@@ -14,24 +14,26 @@ function App() {
   const [stockValue, setStockValue] = useState(0);
   let stockBar = useRef();
   let stockAmount = useRef();
-  
 
+
+  // get bought and sold stock info from db
   const getStocks = () => {
     axios.get('/api/buy')
-        .then(res => {
-          setBoughtStocks(res.data)
-        }
+      .then(res => {
+        setBoughtStocks(res.data)
+      }
 
-        )
-        .catch(err => setBoughtStocks([err]));
+      )
+      .catch(err => setBoughtStocks([err]));
     axios.get('/api/sell')
-    .then(res=> setSoldStocks(res.data))
-    .catch(err=> setSoldStocks([err]));
-}
+      .then(res => setSoldStocks(res.data))
+      .catch(err => setSoldStocks([err]));
+  }
 
 
 
-// main stock profile search for saving info
+  // main stock profile search for saving info
+
   const SearchProfile = (symbol) => {
     const options = {
       method: 'GET',
@@ -50,38 +52,44 @@ function App() {
     });
 
   }
-// Buy stock api call
+
+  // Buy stock api call
+
   const buyStock = () => {
 
     axios.post('/api/buy',
-    {
-      'name': stockProfile.quoteType.shortName,
-      'symbol': stockProfile.symbol,
-      'price': stockProfile.price.regularMarketPrice.raw,
-      'exchange': stockProfile.price.exchangeName,
-      'amount': stockAmount.current.value,
-      'total': stockProfile.price.regularMarketPrice.raw * stockAmount.current.value
-      
-    }).then(res=>{
-      getStocks()
-      setStockProfile('')
-      stockBar.current.value=''
-      setStockValue(0)
-    })
-      
+      {
+        'name': stockProfile.quoteType.shortName,
+        'symbol': stockProfile.symbol,
+        'price': stockProfile.price.regularMarketPrice.raw,
+        'exchange': stockProfile.price.exchangeName,
+        'amount': stockAmount.current.value,
+        'total': stockProfile.price.regularMarketPrice.raw * stockAmount.current.value
+
+      }).then(res => {
+        getStocks()
+        setStockProfile('')
+        stockBar.current.value = ''
+        setStockValue(0)
+      })
+
   }
 
   useEffect(() => {
     if (boughtStocks.length === 0)
-        getStocks()
-        
+      getStocks()
 
-}, [])
+
+  }, [])
 
   return (
     <div onClick={(e) => setStockReturn('')} className="App">
       <h1 className="header">Stock Wallet</h1>
+
+
       {/* Search Bar container */}
+
+
       <div className="searchBox">
 
         <label className='searchLabel'>Search for and select desired stock</label>
@@ -107,8 +115,9 @@ function App() {
             console.error(error);
           });
         }} />
-        {/* Search Button */}
 
+
+        {/* Search Button */}
 
 
         {stockReturn &&
@@ -116,7 +125,7 @@ function App() {
             {stockReturn.map((stock, i) =>
 
               <li className="searchListItem" key={i} onClick={(e) => {
-                
+
                 stockBar.current.value = stock.symbol
                 setStockReturn('')
               }}> <strong>{stock.symbol}:</strong> {stock.shortname}({stock.exchDisp})</li>
@@ -134,7 +143,9 @@ function App() {
         }
       </div>
 
+
       {/* display the searched stock profile */}
+
 
       {stockProfile &&
         <div className="stockProfileDisp">
@@ -151,33 +162,33 @@ function App() {
 
             <div>
               <input id='stockAmount' ref={stockAmount} onChange={(e) => {
-               
+
                 setStockValue(stockAmount.current.value * stockProfile.price.regularMarketPrice.raw)
               }} className="stockAmount" min='1' type="number" />
-                <p className="totalValue"> Total: ${stockValue.toFixed(2)}</p>
-              
+              <p className="totalValue"> Total: ${stockValue.toFixed(2)}</p>
+
             </div>
           </div>
-          {stockValue ? 
-          <button onClick={(e)=> {
-            buyStock()
-          }} className="buyStockButton">BUY</button>:
-          <button disabled className="buyStockButtonDis">Buy</button>
+          {stockValue ?
+            <button onClick={(e) => {
+              buyStock()
+            }} className="buyStockButton">BUY</button> :
+            <button disabled className="buyStockButtonDis">Buy</button>
           }
-          
+
 
 
         </div>
 
       }
 
-{boughtStocks  && 
-  <Buy getStocks={getStocks} setBoughtStocks={setBoughtStocks} boughtStocks={boughtStocks}/>
-}
+      {boughtStocks &&
+        <Buy getStocks={getStocks} setBoughtStocks={setBoughtStocks} boughtStocks={boughtStocks} />
+      }
 
-{soldStocks &&
-  <Sell getStocks={getStocks} soldStocks={soldStocks}/>
-}
+      {soldStocks &&
+        <Sell getStocks={getStocks} soldStocks={soldStocks} />
+      }
 
 
 
